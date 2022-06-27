@@ -1,0 +1,29 @@
+{
+  "name": "modal_links",
+  "version": "1.0.0",
+  "description": "Manage links on Discord chat.",
+  "main": "index.js",
+  "scripts": {
+    "test": "Link"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Modal_Link"
+  },
+  "keywords": [
+    "Discord",
+    "Message",
+    "Links",
+    "Modal",
+    "Chat"
+  ],
+  "author": "Martín Munive",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.8.1",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0"
+  }
+}
