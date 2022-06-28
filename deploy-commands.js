@@ -1,4 +1,4 @@
-// *** SLASH COMMANDS *** 
+// *** COMMANDS ***
 // En esta sección se colocan los constructores de los comandos. Para llamarlos en Discord.
 
 // Estas librerías deben estar instaladas en el proyecto. Se relacionan acá.
@@ -21,8 +21,9 @@ for (const file of commandFiles) {
 	commands.push(command.data.toJSON());
 }
 
+// Se genera la orden de actualización dentro del Bot.
 const rest = new REST({ version: '9' }).setToken(token);
-
+console.log('Se han comenzado a actualizar los comandos.');
 rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-	.then(() => console.log('Los comandos se han registrado exitosamente.'))
+	.then(() => console.log('Los comandos se actualizaron exitosamente.'))
 	.catch(console.error);

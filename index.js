@@ -20,6 +20,7 @@ const { token } = require('./config.json');
 // Crea la instancia para el cliente.
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
+// **********************************************************************************
 // *** Comandos ***
 // Los comandos se leen desde una colección formada por archivos en una carpeta.
 // Los comandos están en una carpeta con el mismo nombre.
@@ -34,6 +35,8 @@ for (const file of commandFiles) {
 	// La llave es el nombre del comando. El valor es el módulo exportado.
 	client.commands.set(command.data.name, command);
 }
+
+// **********************************************************************************
 // *** Eventos ***
 // La conexión se verifica por medio de Eventos.
 // Los eventos están en la carpeta con el mismo nombre.
@@ -45,11 +48,11 @@ for (const file of eventFiles) {
 	const event = require(filePath);
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args));
-	} else {
+	}
+	else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
-
 // Se llama a los comándos dinámicamente.
 // No hay una lista condicional de verificación. Se buscan en la carpeta de comandos.
 client.on('interactionCreate', async interaction => {
@@ -58,7 +61,8 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 	try {
 		await command.execute(interaction);
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'Hubo un error al intentar ejecutar el comando!', ephemeral: true });
 	}
