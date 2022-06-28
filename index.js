@@ -20,7 +20,9 @@ const { token } = require('./config.json');
 // Crea la instancia para el cliente.
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-// Los comandos se leen desde una colección en formada por archivos en una carpeta.
+// *** Comandos ***
+// Los comandos se leen desde una colección formada por archivos en una carpeta.
+// Los comandos están en una carpeta con el mismo nombre.
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -32,10 +34,22 @@ for (const file of commandFiles) {
 	// La llave es el nombre del comando. El valor es el módulo exportado.
 	client.commands.set(command.data.name, command);
 }
-// Mensajes de verificación, para ingreso exitoso.
-client.once('ready', () => {
-	console.log('Trinity... Estoy dentro!');
-});
+// *** Eventos ***
+// La conexión se verifica por medio de Eventos.
+// Los eventos están en la carpeta con el mismo nombre.
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
 // Se llama a los comándos dinámicamente.
 // No hay una lista condicional de verificación. Se buscan en la carpeta de comandos.
 client.on('interactionCreate', async interaction => {
