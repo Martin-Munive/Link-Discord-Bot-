@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('echo')
+		.setName('simon_dice')
 		.setDescription('Envía al chat lo que escribes.')
 		.addStringOption(option =>
 			option.setName('input')

@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('echo')
+		.setName('echo_canal')
 		.setDescription('Envía al chat lo que escribes.')
 		.addStringOption(option =>
 			option.setName('input')
@@ -11,5 +11,7 @@ module.exports = {
 	async execute(interaction) {
 		const string = interaction.options.getString('input');
 		await interaction.reply(string);
+		const canal = interaction.client.channels.cache.find(channel => channel.id === '990109198677315614');
+		canal.send (string);
 	},
 };
