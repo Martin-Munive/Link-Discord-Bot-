@@ -5,11 +5,15 @@ module.exports = {
 		.setName('links')
 		.setDescription('Envía al chat lo que escribes.')
 		.addStringOption(option =>
-			option.setName('input')
+			option.setName('descripcion')
 				.setDescription('Un comentario y el Link.')
 				.setRequired(true))
 		.addStringOption(option =>
-			option.setName('category')
+			option.setName('link')
+				.setDescription('Un comentario y el Link.')
+				.setRequired(true))
+		.addStringOption(option =>
+			option.setName('canal')
 				.setDescription('El canal a donde va el link.')
 				.setRequired(true)
 				.addChoices(
@@ -25,16 +29,21 @@ module.exports = {
 					{ name: 'Software', value: '982749015936479232' },
 					{ name: 'Hardware', value: '993772431493828609' },
 					{ name: 'Diseño', value: '990292508389015654' },
+					{ name: 'Filosofía', value: '996301164276613122' },
+					{ name: 'Literatura', value: '996301203480780891' },
 					{ name: 'Películas/Series', value: '990108332717121556' },
 					{ name: 'Música', value: '990108513101561856' },
 					{ name: 'Imágenes', value: '990108802047180831' },
 					{ name: 'Videojuegos', value: '990109771740905473' })),
 	async execute(interaction) {
-		const string = interaction.options.getString('input');
-		const objetivo = interaction.options.getString('category');
+		const name = interaction.user.username;
+		const datos = interaction.options.getString('descripcion');
+		const string = interaction.options.getString('link');
+		const objetivo = interaction.options.getString('canal');
 		const canal_1 = interaction.client.channels.cache.find(channel => channel.id === '694694346351444083');
 		const canal_2 = interaction.client.channels.cache.find(channel => channel.id === objetivo);
-		await canal_1.send (string);
-		await canal_2.send (string);
+		await canal_1.send (`  ${name} \n Descripción:  ${datos} \n ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n ${string}`);
+		
+		await canal_2.send (`  ${name} \n Descripción:  ${datos} \n ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n ${string}`);
 	},
 };
